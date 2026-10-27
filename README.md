@@ -4,7 +4,7 @@ Source for [www.padmanabhan.in](https://www.padmanabhan.in), "Joy of Traveling":
 
 ## How deployment works
 
-Every push to `main` runs `.github/workflows/deploy.yml`, which builds the site and uploads `dist/` to Hostinger over FTP. Only changed files are uploaded. The FTP login opens inside `public_html`, so files go straight there.
+Every push to `main` runs `.github/workflows/deploy.yml`, which builds the site and uploads `dist/` to Hostinger over FTP. Only changed files are uploaded. Files go to `/domains/padmanabhan.in/public_html/` on Hostinger, which is the folder that serves the site (the FTP login itself opens in the account's top-level `public_html`, which is not used by any website).
 
 If a deploy succeeds but the live site doesn't change, clear Hostinger's cache: hPanel → padmanabhan.in → Performance → CDN → Flush cache. You can also run it by hand from the **Actions** tab ("Run workflow").
 

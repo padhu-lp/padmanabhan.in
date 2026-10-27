@@ -33,6 +33,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
-          # The Hostinger FTP login already opens inside public_html,
-          # so upload to the login folder itself.
-          server-dir: ./
+          # Hostinger serves each website from domains/<site>/public_html.
+          # The FTP login opens in the account's top-level public_html,
+          # so use the absolute path to this site's folder.
+          server-dir: /domains/padmanabhan.in/public_html/
