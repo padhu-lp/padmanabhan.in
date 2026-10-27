@@ -2,10 +2,13 @@
 title: "Norwegian Fjords"
 category: adventure
 date: 2024-07-05
-description: "Walking exploration on the icy Fjords of Norway"
-# original image: PXL_20240404_120415252.webp — add as src/assets/posts/norwegian-fjords.webp and set cover
+description: "Walking exploration on the icy fjords of Norway."
+cover: ../../assets/posts/norwegian-fjords/cover.webp
+coverAlt: "Norwegian Fjords"
+gallery:
+  - ../../assets/posts/norwegian-fjords/02.webp
+  - ../../assets/posts/norwegian-fjords/03.webp
+  - ../../assets/posts/norwegian-fjords/04.webp
 ---
 
-Walking exploration on the icy Fjords of Norway
 
-<!-- PENDING: full post text to be imported from the site backup -->

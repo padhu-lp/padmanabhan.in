@@ -2,10 +2,14 @@
 title: "Skydiving – Manali"
 category: adventure
 date: 2024-02-07
-description: "A great adrenaline rush diving from a height over the Himalayan landscape in Manali, and a scenic route up to Rohtang Pass."
-# original image: Manali-1-1.webp — add as src/assets/posts/skydiving-manali.webp and set cover
+description: "It was a great adrenaline rush diving from a height in the Himalayan landscape with a breathtaking view in Manali."
+cover: ../../assets/posts/skydiving-manali/cover.webp
+coverAlt: "Skydiving – Manali"
+gallery:
+  - ../../assets/posts/skydiving-manali/02.webp
+  - ../../assets/posts/skydiving-manali/03.webp
+  - ../../assets/posts/skydiving-manali/04.webp
+  - ../../assets/posts/skydiving-manali/05.webp
 ---
 
-A great adrenaline rush diving from a height over the Himalayan landscape in Manali, and a scenic route up to Rohtang Pass.
 
-<!-- PENDING: full post text to be imported from the site backup -->

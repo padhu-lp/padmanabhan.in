@@ -45,6 +45,7 @@ const work = [
     <section class="prose" aria-labelledby="travel">
       <h2 id="travel">Why travel</h2>
       <p>Travel keeps me curious in the same way technology does. I’ve been to Europe, Asia and across India, and I prefer trips with something to do: a skydive, a boat ride through the fjords, a night in the desert or a walk into a cave.</p>
+      <p>This site is where both worlds meet: <a href="/travel/">travel stories</a>, <a href="/adventure/">adventures</a> and <a href="/tech/">writing on technology</a>.</p>
       <ul class="places">
         {journeys.map((p) => <li><a href={`/${p.id}/`}>{p.data.title}</a></li>)}
       </ul>
@@ -52,6 +53,7 @@ const work = [
 
     <section class="contact" aria-labelledby="contact">
       <h2 id="contact">Get in touch</h2>
+      <p>I’d love to hear from you, whether it’s about a place I’ve written about, a question on a tech post, or just to say hello.</p>
       <p>Write to me at <a href={`mailto:${SITE.email}`}>{SITE.email}</a>, or find me on{' '}
         {SITE.social.map((s, i) => (
           <>{i > 0 && (i === SITE.social.length - 1 ? ' and ' : ', ')}<a href={s.url} rel="me noopener" target="_blank">{s.name}</a></>

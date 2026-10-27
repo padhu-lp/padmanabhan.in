@@ -2,10 +2,19 @@
 title: "Dandelli"
 category: travel
 date: 2024-01-21
-description: "Dandeli, in Karnataka, is known for its wildlife sanctuary and natural beauty, including the Kali Tiger Reserve."
-# original image: IMG_20180819_133951-1.webp — add as src/assets/posts/dandelli.webp and set cover
+description: "Dandeli, located in Karnataka, India, is renowned for its wildlife sanctuary and natural beauty. Key attractions include the Dandeli Wildlife Sanctuary and the Kali Tiger Reserve."
+cover: ../../assets/posts/dandelli/cover.webp
+coverAlt: "Dandelli"
+gallery:
+  - ../../assets/posts/dandelli/03.webp
+  - ../../assets/posts/dandelli/04.webp
+  - ../../assets/posts/dandelli/05.webp
+  - ../../assets/posts/dandelli/06.webp
+  - ../../assets/posts/dandelli/07.webp
 ---
 
-Dandeli, in Karnataka, is known for its wildlife sanctuary and natural beauty, including the Kali Tiger Reserve.
+River Kali flowing from the western ghats passes through Dandeli in Karnataka. When the river is in spate, the swirling waters with a number of rapids provides an ideal condition for thrilling river rafting.
 
-<!-- PENDING: full post text to be imported from the site backup -->
+Forest department of Karnataka provides and controls this service. It turned out to be an very adventurous trip down the river!
+
+## Click on the image below to view in lightbox

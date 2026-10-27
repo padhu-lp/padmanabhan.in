@@ -1,0 +1,76 @@
+---
+import { Image, getImage } from 'astro:assets';
+interface Props { images: ImageMetadata[]; title: string }
+const { images, title } = Astro.props;
+const full = await Promise.all(images.map((img) => getImage({ src: img, width: Math.min(img.width, 1800), format: 'webp' })));
+---
+{images.length > 0 && (
+  <section class="gallery" aria-label={`Photos from ${title}`} data-gallery>
+    <ul class:list={['grid', { feature: images.length >= 5 }]}>
+      {images.map((img, i) => (
+        <li>
+          <button type="button" data-full={full[i].src} data-index={i} aria-label={`Open photo ${i + 1} of ${images.length}`}>
+            <Image src={img} alt="" widths={[360, 720]} sizes="(min-width: 64rem) 22rem, 50vw" />
+          </button>
+        </li>
+      ))}
+    </ul>
+    <dialog class="lightbox" aria-label="Photo viewer">
+      <img alt="" />
+      <p class="count" aria-live="polite"></p>
+      <button type="button" class="close" aria-label="Close">×</button>
+      <button type="button" class="prev" aria-label="Previous photo">‹</button>
+      <button type="button" class="next" aria-label="Next photo">›</button>
+    </dialog>
+  </section>
+)}
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((root) => {
+    const thumbs = [...root.querySelectorAll<HTMLButtonElement>('button[data-full]')];
+    const dlg = root.querySelector('dialog')!;
+    const img = dlg.querySelector('img')!;
+    const count = dlg.querySelector('.count')!;
+    let i = 0;
+    const show = (n: number) => {
+      i = (n + thumbs.length) % thumbs.length;
+      img.src = thumbs[i].dataset.full!;
+      count.textContent = `${i + 1} / ${thumbs.length}`;
+    };
+    thumbs.forEach((t, n) => t.addEventListener('click', () => { show(n); dlg.showModal(); }));
+    dlg.querySelector('.close')!.addEventListener('click', () => dlg.close());
+    dlg.querySelector('.prev')!.addEventListener('click', () => show(i - 1));
+    dlg.querySelector('.next')!.addEventListener('click', () => show(i + 1));
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('close', () => thumbs[i].focus());
+    dlg.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(i - 1);
+      if (e.key === 'ArrowRight') show(i + 1);
+    });
+  });
+</script>
+
+<style>
+  .gallery { margin-top: 3rem; }
+  .grid { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 48rem) {
+    .grid { grid-template-columns: repeat(3, 1fr); }
+    .feature li:first-child { grid-column: span 2; grid-row: span 2; }
+  }
+  li { margin: 0; }
+  button[data-full] { all: unset; display: block; width: 100%; height: 100%; cursor: zoom-in; border-radius: 4px; overflow: hidden; }
+  button[data-full]:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  button[data-full] :global(img) { width: 100%; height: 100%; aspect-ratio: 1; object-fit: cover; transition: transform .5s ease; }
+  button[data-full]:hover :global(img) { transform: scale(1.04); }
+
+  .lightbox { border: 0; padding: 0; background: transparent; max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh; }
+  .lightbox::backdrop { background: rgba(10, 18, 36, .94); }
+  .lightbox[open] { display: grid; place-items: center; }
+  .lightbox img { max-width: min(92vw, 1800px); max-height: 84vh; object-fit: contain; border-radius: 2px; }
+  .count { position: fixed; bottom: 1.25rem; left: 0; right: 0; text-align: center; color: var(--gold-soft); font-size: var(--step--1); margin: 0; }
+  .lightbox button { position: fixed; background: none; border: 0; color: #fff; font-size: 2.6rem; line-height: 1; cursor: pointer; padding: 0.75rem 1rem; }
+  .lightbox button:hover { color: var(--gold-soft); }
+  .close { top: 0.5rem; right: 0.5rem; }
+  .prev { left: 0.25rem; top: 50%; transform: translateY(-50%); }
+  .next { right: 0.25rem; top: 50%; transform: translateY(-50%); }
+</style>
