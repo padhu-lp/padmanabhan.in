@@ -16,7 +16,7 @@ const tech = all.filter((p) => p.data.category === 'tech').slice(0, 3);
 <Base overlayHeader>
   <section class="hero on-dark">
     {hero
-      ? <Image class="hero-img" src={hero} alt="Northern lights over Iceland" widths={[800, 1400, 2200]} sizes="100vw" loading="eager" />
+      ? <Image class="hero-img" src={hero} alt="Padmanabhan on a seaside pier" widths={[800, 1400, 2200]} sizes="100vw" loading="eager" />
       : <div class="hero-img hero-sky" role="presentation"></div>}
     <div class="wrap hero-text">
       <h1>Experience the joy of travelling</h1>
@@ -70,6 +70,22 @@ const tech = all.filter((p) => p.data.category === 'tech').slice(0, 3);
   .hero::after { content: ''; position: absolute; inset: 0; z-index: -1;
     background: linear-gradient(180deg, rgba(15,27,51,.15) 30%, rgba(15,27,51,.9)); }
   .hero-text { padding-block: 9rem 4.5rem; animation: rise 1.1s ease-out both; }
+
+  /* A real photo (usually people) sits beside the headline, never under it */
+  .hero:has(img.hero-img) { background: var(--night); }
+  .hero:has(img.hero-img)::after { background: linear-gradient(180deg, rgba(15,27,51,.7), transparent 18%); }
+  @media (max-width: 51.99rem) {
+    .hero:has(img.hero-img) { display: flex; flex-direction: column; min-height: 0; }
+    img.hero-img { position: relative; height: auto; aspect-ratio: 4 / 5; object-position: 55% 80%;
+      -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }
+    .hero:has(img.hero-img) .hero-text { padding-block: 0.5rem 3.5rem; }
+  }
+  @media (min-width: 52rem) {
+    .hero:has(img.hero-img) { min-height: min(88vh, 46rem); align-items: center; }
+    img.hero-img { left: auto; right: 0; width: 62%; object-position: center 60%;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 35%); mask-image: linear-gradient(90deg, transparent, #000 35%); }
+    .hero:has(img.hero-img) .hero-text { padding-block: 7rem 4rem; }
+  }
   .hero h1 { font-size: var(--step-5); font-weight: 500; color: #fff; max-width: 12ch; margin-bottom: 1.5rem; line-height: 1; }
   .quote { font-family: var(--serif); font-style: italic; font-size: var(--step-1); color: rgba(255,255,255,.9); margin: 0 0 2rem; }
   .quote span { font-style: normal; font-family: var(--sans); font-size: var(--step--1); color: var(--gold-soft); margin-left: 0.5rem; }
