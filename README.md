@@ -4,7 +4,9 @@ Source for [www.padmanabhan.in](https://www.padmanabhan.in), "Joy of Traveling":
 
 ## How deployment works
 
-Every push to `main` runs `.github/workflows/deploy.yml`, which builds the site and uploads `dist/` to Hostinger over FTP. Only changed files are uploaded. You can also run it by hand from the **Actions** tab ("Run workflow").
+Every push to `main` runs `.github/workflows/deploy.yml`, which builds the site and uploads `dist/` to Hostinger over FTP. Only changed files are uploaded. The FTP login opens inside `public_html`, so files go straight there.
+
+If a deploy succeeds but the live site doesn't change, clear Hostinger's cache: hPanel → padmanabhan.in → Performance → CDN → Flush cache. You can also run it by hand from the **Actions** tab ("Run workflow").
 
 ### One-time setup
 
@@ -15,7 +17,6 @@ In the GitHub repo, go to **Settings → Secrets and variables → Actions** and
 | `FTP_SERVER` | Secret | FTP host from hPanel → Files → FTP Accounts (e.g. `ftp.padmanabhan.in` or the IP shown) |
 | `FTP_USERNAME` | Secret | FTP username from the same page |
 | `FTP_PASSWORD` | Secret | FTP password (reset it there if you don't have it) |
-| `FTP_SERVER_DIR` | Variable (optional) | Remote folder ending in `/`. Defaults to `public_html/`. If the FTP account opens at the site's root already, set it to `./` |
 
 ## Adding a post
 

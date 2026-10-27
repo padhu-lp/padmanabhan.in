@@ -26,24 +26,6 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-      # TEMPORARY: shows where the FTP login lands, to find the folder that serves the site
-      - name: Show FTP folders
-        continue-on-error: true
-        env:
-          H: ${{ secrets.FTP_SERVER }}
-          U: ${{ secrets.FTP_USERNAME }}
-          P: ${{ secrets.FTP_PASSWORD }}
-        run: |
-          ls_dir() { echo; echo "===== /$1"; curl -s --list-only --user "$U:$P" "ftp://$H/$1" | sort | head -60 || echo "(cannot list)"; }
-          echo "Server: $H"; echo "FTP login lands in:"; curl -s --user "$U:$P" -Q "PWD" "ftp://$H/" -o /dev/null -v 2>&1 | grep -i '^< 257' || true
-          ls_dir ""
-          ls_dir "public_html/"
-          ls_dir "domains/"
-          for d in $(curl -s --list-only --user "$U:$P" "ftp://$H/domains/" 2>/dev/null); do ls_dir "domains/$d/public_html/"; done
-          for f in "index.html" "public_html/index.html" "domains/padmanabhan.in/public_html/index.html"; do
-            echo; echo "===== title in /$f:"; curl -s --user "$U:$P" "ftp://$H/$f" | grep -o '<title>[^<]*' || echo "(none)"
-          done
-
       - name: Upload site over FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -51,6 +33,6 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
-          # Folder on Hostinger that serves www.padmanabhan.in.
-          # Set the repo variable FTP_SERVER_DIR if yours differs.
-          server-dir: ${{ vars.FTP_SERVER_DIR || 'public_html/' }}
+          # The Hostinger FTP login already opens inside public_html,
+          # so upload to the login folder itself.
+          server-dir: ./
