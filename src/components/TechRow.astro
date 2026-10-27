@@ -1,0 +1,25 @@
+---
+import Cover from './Cover.astro';
+import { formatDate } from '../site';
+interface Props { post: any }
+const { post } = Astro.props;
+const { title, date, description, cover } = post.data;
+---
+<article class="row">
+  <p class="meta"><time datetime={date.toISOString()}>{formatDate(date)}</time></p>
+  <div class="text">
+    <h3><a href={`/${post.id}/`}>{title}</a></h3>
+    <p>{description}</p>
+  </div>
+  {cover && <a class="thumb" href={`/${post.id}/`} tabindex="-1" aria-hidden="true"><Cover post={post} widths={[240, 480]} sizes="12rem" /></a>}
+</article>
+<style>
+  .row { display: grid; grid-template-columns: 1fr; gap: 0.5rem 2rem; padding-block: 1.75rem; border-top: 1px solid var(--rule); }
+  .meta { margin: 0; padding-top: 0.4rem; }
+  h3 { margin: 0 0 0.4rem; }
+  h3 a { color: var(--ink); text-decoration: none; }
+  h3 a:hover { text-decoration: underline; text-decoration-color: var(--gold); }
+  .text p { margin: 0; color: var(--muted); max-width: 60ch; }
+  .thumb :global(img) { width: 100%; max-width: 12rem; aspect-ratio: 4/3; object-fit: cover; border-radius: 4px; }
+  @media (min-width: 48rem) { .row { grid-template-columns: 8rem 1fr 12rem; } }
+</style>

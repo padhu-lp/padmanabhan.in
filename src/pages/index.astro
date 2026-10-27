@@ -1,0 +1,93 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PhotoTile from '../components/PhotoTile.astro';
+import TechRow from '../components/TechRow.astro';
+import { getPosts } from '../lib';
+
+const heroes = import.meta.glob<{ default: ImageMetadata }>('../assets/hero.{jpg,jpeg,png,webp}', { eager: true });
+const hero = Object.values(heroes)[0]?.default;
+
+const all = await getPosts();
+const journeys = all.filter((p) => p.data.category !== 'tech');
+const [lead, ...rest] = journeys;
+const tech = all.filter((p) => p.data.category === 'tech').slice(0, 3);
+---
+<Base overlayHeader>
+  <section class="hero on-dark">
+    {hero
+      ? <Image class="hero-img" src={hero} alt="Northern lights over Iceland" widths={[800, 1400, 2200]} sizes="100vw" loading="eager" />
+      : <div class="hero-img hero-sky" role="presentation"></div>}
+    <div class="wrap hero-text">
+      <h1>Experience the joy of travelling</h1>
+      <p class="quote">“Not all those who wander are lost.” <span>J.R.R. Tolkien</span></p>
+      <a class="btn" href="/travel/">Read the travel stories</a>
+    </div>
+  </section>
+
+  <section class="wrap section" aria-labelledby="journeys">
+    <div class="head">
+      <h2 id="journeys">Journeys and adventures</h2>
+      <p><a href="/travel/">All travel</a> &nbsp;/&nbsp; <a href="/adventure/">All adventure</a></p>
+    </div>
+    {lead && <PhotoTile post={lead} large />}
+    <div class="grid">
+      {rest.slice(0, 6).map((p) => <PhotoTile post={p} />)}
+    </div>
+  </section>
+
+  <section class="wrap section" aria-labelledby="tech">
+    <div class="head">
+      <h2 id="tech">Writing on technology</h2>
+      <p><a href="/tech/">All tech posts</a></p>
+    </div>
+    <div>{tech.map((p) => <TechRow post={p} />)}</div>
+  </section>
+
+  <section class="band on-dark">
+    <blockquote class="wrap">
+      <p>“Travel makes one modest. You see what a tiny place you occupy in the world.”</p>
+      <footer>Gustave Flaubert</footer>
+    </blockquote>
+  </section>
+
+  <section class="wrap section intro" aria-labelledby="me">
+    <h2 id="me">Hello, I’m Padmanabhan</h2>
+    <p>Over three and a half decades in IT, from programming IBM mainframes to building with today’s AI tools. In between, I’ve chased northern lights in Iceland, jumped out of planes over the Himalayas and walked on the ice of Norway’s fjords. This is where I write about both.</p>
+    <a href="/about/">More about me</a>
+  </section>
+</Base>
+
+<style>
+  .hero { position: relative; min-height: min(92vh, 52rem); display: grid; align-items: end; color: #fff; isolation: isolate; overflow: hidden; }
+  .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+  .hero-sky {
+    background:
+      radial-gradient(60% 45% at 30% 30%, rgba(88, 196, 160, .35), transparent 70%),
+      radial-gradient(50% 40% at 70% 20%, rgba(201, 162, 74, .28), transparent 70%),
+      linear-gradient(180deg, #0a1428, #0f1b33 60%, #1c2b4a);
+  }
+  .hero::after { content: ''; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(180deg, rgba(15,27,51,.15) 30%, rgba(15,27,51,.9)); }
+  .hero-text { padding-block: 9rem 4.5rem; animation: rise 1.1s ease-out both; }
+  .hero h1 { font-size: var(--step-5); font-weight: 500; color: #fff; max-width: 12ch; margin-bottom: 1.5rem; line-height: 1; }
+  .quote { font-family: var(--serif); font-style: italic; font-size: var(--step-1); color: rgba(255,255,255,.9); margin: 0 0 2rem; }
+  .quote span { font-style: normal; font-family: var(--sans); font-size: var(--step--1); color: var(--gold-soft); margin-left: 0.5rem; }
+  .btn { display: inline-block; background: var(--gold); color: var(--night); font-weight: 600; text-decoration: none; padding: 0.85rem 1.5rem; border-radius: 2px; }
+  .btn:hover { background: var(--gold-soft); color: var(--night); }
+  @keyframes rise { from { opacity: 0; transform: translateY(1.5rem); } }
+
+  .section { margin-top: 5.5rem; }
+  .head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem 2rem; margin-bottom: 2rem; }
+  .head h2 { margin: 0; }
+  .head p { margin: 0; font-size: var(--step--1); }
+  .grid { display: grid; gap: 3rem 2rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); margin-top: 3.5rem; }
+
+  .band { background: var(--ink); margin-top: 6rem; padding-block: 4.5rem; }
+  .band blockquote { margin-inline: auto; text-align: center; }
+  .band p { font-family: var(--serif); font-style: italic; font-size: var(--step-3); color: #fff; max-width: 28ch; margin: 0 auto 1rem; line-height: 1.2; }
+  .band footer { color: var(--gold-soft); font-size: var(--step--1); }
+
+  .intro > * { max-width: 44rem; }
+  .intro p { font-size: var(--step-1); line-height: 1.55; color: var(--text); }
+</style>

@@ -1,0 +1,49 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Cover from '../components/Cover.astro';
+import PhotoTile from '../components/PhotoTile.astro';
+import { CATEGORIES, formatDate } from '../site';
+import { getPosts } from '../lib';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post, posts } }));
+}
+const { post, posts } = Astro.props;
+const { title, category, date, description, cover } = post.data;
+const { Content } = await render(post);
+const more = posts.filter((p) => p.data.category === category && p.id !== post.id).slice(0, 3);
+---
+<Base title={title} description={description} image={cover?.src}>
+  <article>
+    <header class="wrap post-head">
+      <a class="tag" href={`/${category}/`}>{CATEGORIES[category].label}</a>
+      <h1>{title}</h1>
+      <p class="meta"><time datetime={date.toISOString()}>{formatDate(date)}</time></p>
+    </header>
+    {cover && <div class="wrap hero"><Cover post={post} widths={[800, 1400, 2000]} sizes="(min-width: 72rem) 72rem, 100vw" loading="eager" /></div>}
+    <div class="wrap prose"><Content /></div>
+  </article>
+  {more.length > 0 && (
+    <aside class="wrap more" aria-labelledby="more">
+      <h2 id="more">More {CATEGORIES[category].label.toLowerCase()} posts</h2>
+      <div class="grid">{more.map((p) => <PhotoTile post={p} />)}</div>
+    </aside>
+  )}
+</Base>
+<style>
+  .post-head { max-width: 46rem; padding-top: 4rem; margin-bottom: 2.5rem; }
+  .post-head h1 { margin: 0.75rem 0 0.75rem; }
+  .hero :global(img) { width: 100%; max-height: 38rem; object-fit: cover; border-radius: 4px; margin-bottom: 3rem; }
+  .prose { max-width: 42rem; font-size: 1.125rem; line-height: 1.75; }
+  .prose :global(h2) { font-size: var(--step-3); margin-top: 2.5rem; }
+  .prose :global(h3) { margin-top: 2rem; }
+  .prose :global(img) { border-radius: 4px; margin-block: 2rem; }
+  .prose :global(blockquote) { margin: 2rem 0; padding-left: 1.25rem; border-left: 2px solid var(--gold); font-family: var(--serif); font-style: italic; font-size: var(--step-1); }
+  .prose :global(pre) { background: var(--night); color: #e8ecf4; padding: 1rem 1.25rem; border-radius: 4px; overflow-x: auto; font-size: 0.9rem; }
+  .prose :global(table) { border-collapse: collapse; width: 100%; font-size: 0.95rem; display: block; overflow-x: auto; }
+  .prose :global(th), .prose :global(td) { border-bottom: 1px solid var(--rule); padding: 0.6rem 0.75rem; text-align: left; vertical-align: top; }
+  .more { margin-top: 5rem; border-top: 1px solid var(--rule); padding-top: 3rem; }
+  .grid { display: grid; gap: 3rem 2rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); }
+</style>

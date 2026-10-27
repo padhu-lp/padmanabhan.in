@@ -1,0 +1,9 @@
+---
+import { Image } from 'astro:assets';
+interface Props { post: any; widths?: number[]; sizes?: string; loading?: 'eager' | 'lazy'; class?: string }
+const { post, widths = [480, 800, 1200], sizes = '(min-width: 64rem) 33vw, 100vw', loading = 'lazy', class: cls } = Astro.props;
+const { cover, coverAlt, title } = post.data;
+---
+{cover
+  ? <Image src={cover} alt={coverAlt ?? title} widths={widths} sizes={sizes} loading={loading} class={cls} />
+  : <div class:list={['cover-fallback', cls]} role="presentation"></div>}

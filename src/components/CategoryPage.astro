@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import PhotoTile from './PhotoTile.astro';
+import TechRow from './TechRow.astro';
+import { CATEGORIES } from '../site';
+import { getPosts } from '../lib';
+interface Props { category: 'travel' | 'adventure' | 'tech' }
+const { category } = Astro.props;
+const meta = CATEGORIES[category];
+const posts = await getPosts(category);
+---
+<Base title={meta.label} description={meta.blurb}>
+  <header class="intro on-dark">
+    <div class="wrap">
+      <h1>{meta.label}</h1>
+      <p>{meta.blurb}</p>
+    </div>
+  </header>
+  <div class="wrap list">
+    {category === 'tech'
+      ? <div>{posts.map((p) => <TechRow post={p} />)}</div>
+      : <div class="grid">{posts.map((p) => <PhotoTile post={p} />)}</div>}
+    {posts.length === 0 && <p>No posts here yet. New stories are on the way.</p>}
+  </div>
+</Base>
+<style>
+  .intro { background: var(--ink); color: #fff; padding-block: 4rem 3.5rem; }
+  .intro h1 { color: #fff; font-size: var(--step-5); font-weight: 500; margin-bottom: 0.5rem; }
+  .intro p { color: rgba(255,255,255,.8); font-size: var(--step-1); margin: 0; max-width: 40ch; }
+  .list { margin-top: 3.5rem; }
+  .grid { display: grid; gap: 3rem 2rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); }
+</style>
