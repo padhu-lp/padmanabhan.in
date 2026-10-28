@@ -1,7 +1,7 @@
 ---
 title: "Dandelli"
 category: travel
-date: 2024-01-21
+date: 2018-04-21
 description: "Dandeli, located in Karnataka, India, is renowned for its wildlife sanctuary and natural beauty. Key attractions include the Dandeli Wildlife Sanctuary and the Kali Tiger Reserve."
 cover: ../../assets/posts/dandelli/cover.webp
 coverAlt: "Dandelli"

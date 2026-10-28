@@ -1,7 +1,7 @@
 ---
 title: "RIB Boat ride in Norway"
 category: adventure
-date: 2024-07-05
+date: 2024-05-10
 description: "An exhilarating boat ride in the cold waters and along the fjords near Bodø in Norway."
 cover: ../../assets/posts/rib-boat-ride-in-norway/cover.webp
 coverAlt: "RIB Boat ride in Norway"

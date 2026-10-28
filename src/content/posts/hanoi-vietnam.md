@@ -1,7 +1,7 @@
 ---
 title: "Hanoi, Vietnam"
 category: travel
-date: 2024-02-03
+date: 2019-01-19
 description: "Hanoi, the Capital of Vietnam has rich history with bustling streets, and cultural gems."
 cover: ../../assets/posts/hanoi-vietnam/cover.webp
 coverAlt: "Hanoi, Vietnam"

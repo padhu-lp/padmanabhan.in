@@ -1,7 +1,7 @@
 ---
 title: "Norwegian Fjords"
 category: adventure
-date: 2024-07-05
+date: 2024-05-14
 description: "Walking exploration on the icy fjords of Norway."
 cover: ../../assets/posts/norwegian-fjords/cover.webp
 coverAlt: "Norwegian Fjords"

@@ -1,7 +1,7 @@
 ---
 title: "Bora Caves, Andhra Pradesh"
 category: adventure
-date: 2024-02-05
+date: 2022-10-09
 description: "Borra Caves, located in the Ananthagiri hills of Andhra Pradesh, are among India’s deepest caves."
 cover: ../../assets/posts/bora-caves-andhra-pradesh/cover.webp
 coverAlt: "Bora Caves, Andhra Pradesh"
